@@ -59,6 +59,7 @@ export function BetContextProvider({ children }) {
   const [isBetComplete,setIsBetComplete]=useState({
     value:null,state:false
   })
+  const [showColorPapers,setShowColorPapers]=useState(false)
 
   function userStateUpdate(event) {
     setUserBalance(event.balance);
@@ -146,7 +147,7 @@ export function BetContextProvider({ children }) {
         winRatio,setWinRatio,
         showCustomizeAmountsModal,setShowCustomizeAmountsModal,
         betPoints,setBetPoints,
-        isBetComplete,setIsBetComplete,selectedCoin,setSelectedCoin
+        isBetComplete,setIsBetComplete,selectedCoin,setSelectedCoin,showColorPapers,setShowColorPapers
       }}>
       {children}
     </BetContext.Provider>

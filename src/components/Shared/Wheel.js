@@ -31,7 +31,7 @@ const Wheel = () => {
     setSelectedColorButton,
     setShowWinningNumberModal,
     selectedColorButton,
-    totalWin,winRatio,setSelectedCoin
+    totalWin,winRatio,setSelectedCoin,showColorPapers,setShowColorPapers
   } = useContext(BetContext);
 
   const segments = ["0", "9", "8", "7", "6", "5", "4", "3", "2", "1"];
@@ -56,15 +56,15 @@ const Wheel = () => {
   } else if (window.innerWidth < 630) {
     wheelSize = 160;
   } else if (window.innerWidth < 768) {
-    wheelSize = 190;
+    wheelSize = 160;
   } else if (window.innerWidth < 900) {
-    wheelSize = 200;
+    wheelSize = 180;
   } else if (window.innerWidth < 1024) {
-    wheelSize = 200;
+    wheelSize = 190;
   } else if (window.innerWidth < 1280) {
     wheelSize = 200;
   } else {
-    wheelSize = 220;
+    wheelSize = 200;
   }
 
 
@@ -127,6 +127,10 @@ const Wheel = () => {
           setShowModal(false);
         }, 3000);
         setSelectedColorButton([])
+        setShowColorPapers(true)
+        setTimeout(() => {
+          setShowColorPapers(false)
+        }, 10000);
       } else {
         
         localStorage.removeItem("selectedNumber");

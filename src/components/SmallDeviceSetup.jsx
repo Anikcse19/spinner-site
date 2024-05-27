@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import Confetti from 'react-confetti';
 import { BetContext } from "../ContextApi/BetContext";
 import LostModal from "./Modal/LostModal";
 import WinModal from "./Modal/WinModal";
@@ -10,13 +11,14 @@ import NumberBoxs from "./Shared/NumberBoxs";
 import PlayWinBox from "./Shared/PlayWinBox";
 import Wheel from "./Shared/Wheel";
 
+
 const SmallDeviceSetup = () => {
   const {
     gameLost,
     gameWin,
     showModal,
     showBonusModal,
-    showWinningNumberModal,
+    showWinningNumberModal,showColorPapers
   } = useContext(BetContext);
 
   return (
@@ -27,6 +29,13 @@ const SmallDeviceSetup = () => {
         className="px-2"
       >
         <Header />
+        {showColorPapers &&  <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          numberOfPieces={5000}
+          recycle={false} // Set to true if you want the confetti to keep falling
+        />}
+       
         <div className="flex items-center gap-2">
           <div className="block xl:hidden w-[50%]">
             <PlayWinBox />
@@ -38,6 +47,7 @@ const SmallDeviceSetup = () => {
 
         <div className="flex flex-col  xl:flex-row  xl:justify-between  xl:mt-5">
           <div className="relative self-center">
+          
             <Wheel />
             {gameLost && showModal && <LostModal />}
             {gameWin && showModal && <WinModal />}
