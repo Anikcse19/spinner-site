@@ -64,7 +64,7 @@ const WheelComponent = ({
   let centerY = 0;
 
   if(window.innerWidth <=330){
-    centerX = 180;
+    centerX = 160;
     centerY = 160;
     width =300;
     height = 300;
@@ -79,7 +79,7 @@ const WheelComponent = ({
     width = 350;
     height = 300;
   }  else if (window.innerWidth < 450) {
-    centerX = 180;
+    centerX = 200;
     centerY = 160;
     width = 350;
     height = 300;
@@ -95,19 +95,19 @@ const WheelComponent = ({
     width = 450;
     height = 350;
   } else if (window.innerWidth <= 768) {
-    centerX = 300;
+    centerX = 360;
     centerY = 220;
     width = 600;
     height = 450;
   } else if (window.innerWidth < 900) {
-    centerX = 300;
+    centerX = 380;
     centerY = 220;
     width = 600;
     height = 450;
-  } else if (window.innerWidth < 1020) {
-    centerX = 360;
+  } else if (window.innerWidth <= 1024) {
+    centerX = 480;
     centerY = 220;
-    width = 680;
+    width = 700;
     height = 450;
   } else if (window.innerWidth < 1280) {
     centerX = 220;
