@@ -1,0 +1,71 @@
+/* .wrapper {
+  border: 1px solid black;
+  width: 100%;
+  background-color: yellow;
+  border-radius: 15px;
+  height: 25px;
+} */
+
+.container {
+  /* background-color: pink; */
+}
+
+/* .barCompleted {
+  background-color: green;
+  width: 50%;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  height: 23px;
+} */
+
+/* .label { */
+/* font-size: 10px; */
+/* color: white; */
+/* } */
+/* @media only screen and (max-width: 600px) {
+  .wrapper {
+    height: 10px;
+    padding-bottom: 5px;
+  }
+  .barCompleted {
+    height: 18px;
+  }
+} */
+
+#file {
+  width: 100%; /* Set the width of the progress bar */
+  height: 10px; /* Set the height of the progress bar */
+  border-radius: 10px;
+}
+
+/* Customize the color of the progress bar */
+#file::-webkit-progress-value {
+  background-color: #166619; /* Green color */
+  border-radius: 10px;
+}
+
+#file::-moz-progress-bar {
+  background-color: #4caf50; /* Green color */
+  border-radius: 10px;
+}
+
+#file::-ms-fill {
+  background-color: #107513; /* Green color */
+  border-radius: 10px;
+}
+
+/* Customize the color of the progress bar track */
+#file::-webkit-progress-bar {
+  background-color: yellow; /* Light gray color */
+  border-radius: 10px;
+}
+
+#file::-moz-progress-bar {
+  background-color: yellow; /* Light gray color */
+  border-radius: 10px;
+}
+
+#file::-ms-fill-lower {
+  background-color: yellow; /* Light gray color */
+  border-radius: 10px;
+}
