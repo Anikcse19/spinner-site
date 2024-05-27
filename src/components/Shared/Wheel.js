@@ -62,9 +62,9 @@ const Wheel = () => {
   } else if (window.innerWidth < 1024) {
     wheelSize = 190;
   } else if (window.innerWidth < 1280) {
-    wheelSize = 200;
+    wheelSize = 210;
   } else {
-    wheelSize = 200;
+    wheelSize = 210;
   }
 
 

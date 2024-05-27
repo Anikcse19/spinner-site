@@ -46,7 +46,7 @@ const SmallDeviceSetup = () => {
         </div>
 
         <div className="flex flex-col  xl:flex-row  xl:justify-between  xl:mt-5">
-          <div className="relative self-center">
+          <div className="relative self-start">
           
             <Wheel />
             {gameLost && showModal && <LostModal />}
