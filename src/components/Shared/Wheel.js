@@ -31,7 +31,11 @@ const Wheel = () => {
     setSelectedColorButton,
     setShowWinningNumberModal,
     selectedColorButton,
-    totalWin,winRatio,setSelectedCoin,showColorPapers,setShowColorPapers
+    totalWin,
+    winRatio,
+    setSelectedCoin,
+    showColorPapers,
+    setShowColorPapers,
   } = useContext(BetContext);
 
   const segments = ["0", "9", "8", "7", "6", "5", "4", "3", "2", "1"];
@@ -58,7 +62,7 @@ const Wheel = () => {
   } else if (window.innerWidth < 768) {
     wheelSize = 160;
   } else if (window.innerWidth < 900) {
-    wheelSize = 180;
+    wheelSize = 190;
   } else if (window.innerWidth < 1024) {
     wheelSize = 190;
   } else if (window.innerWidth < 1280) {
@@ -67,9 +71,7 @@ const Wheel = () => {
     wheelSize = 210;
   }
 
-
   const onFinished = async (winner) => {
-    
     setWinningNumber2(winner);
     setShowWinningNumberModal(true);
     setDraggedItem("");
@@ -82,8 +84,8 @@ const Wheel = () => {
     setRandomLuckyNumber(getRandomNumber(0, 9));
     setIsTimesUp(false);
     stopSpinner.current = false;
-    setSelectedColorButton([])
-    setSelectedCoin(null)
+    setSelectedColorButton([]);
+    setSelectedCoin(null);
 
     let selectedNumber = localStorage.getItem("selectedNumber");
 
@@ -96,19 +98,14 @@ const Wheel = () => {
       return;
     }
 
-    const answer=selectedColorButton.find((number)=>Number(number.id)===Number(winner))
-    
-    
-  
+    const answer = selectedColorButton.find(
+      (number) => Number(number.id) === Number(winner)
+    );
 
-    
     if (isBetDone) {
       // if win
-      
-      
-      if (answer!==undefined && (Number(winner) === Number(answer.id))) {
-        
-        
+
+      if (answer !== undefined && Number(winner) === Number(answer.id)) {
         //if get bonus
         if (bonusPoint !== null) {
           setShowBonusModal(true);
@@ -121,18 +118,17 @@ const Wheel = () => {
         setIsSelected({ id: null, value: false });
         setDraggedItem("");
         setGameWin(true);
-      
+
         setShowModal(true);
         setTimeout(() => {
           setShowModal(false);
         }, 3000);
-        setSelectedColorButton([])
-        setShowColorPapers(true)
+        setSelectedColorButton([]);
+        setShowColorPapers(true);
         setTimeout(() => {
-          setShowColorPapers(false)
+          setShowColorPapers(false);
         }, 10000);
       } else {
-        
         localStorage.removeItem("selectedNumber");
         setIsSelected({ id: null, value: false });
         setDraggedItem("");
@@ -141,8 +137,7 @@ const Wheel = () => {
         setTimeout(() => {
           setShowModal(false);
         }, 3000);
-        setSelectedColorButton([])
-       
+        setSelectedColorButton([]);
       }
     } else {
       setIsSelected({ id: null, value: false });

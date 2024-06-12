@@ -9,6 +9,7 @@ import InitialLoading from "../components/Modal/InitialLoadingModal";
 import AudioPlayer from "../components/Shared/MusicPlayer";
 import SmallDeviceSetup from "../components/SmallDeviceSetup";
 import globalStateUpdate from "../utils/GlobalStateUpdate";
+import url from "../config";
 
 const HomePage = () => {
   const {
@@ -36,7 +37,7 @@ const HomePage = () => {
     setIsTimesUp,
     setTotalPlay,
     setTotalWin,
-    winRatio,
+    setRunningRound,
   } = useContext(BetContext);
 
   let screenSize;
@@ -46,9 +47,10 @@ const HomePage = () => {
     screenSize = "big";
   }
 
-  const url = "https://1ten365.online/init-render-data";
+  // const url = `${url}/init-render-data`;
 
   useEffect(() => {
+    // calculate present time
     const presentTime = new Date();
     const minutes = presentTime.getMinutes();
     const seconds = presentTime.getSeconds();
@@ -56,10 +58,10 @@ const HomePage = () => {
 
     setHistory(window.initialBettingHistory);
     setCurrentTime(window.initialBettingTime);
-    setWinningNumber2(window.initialBettingHistory[6])
+    setWinningNumber2(window.initialBettingHistory[6]);
     try {
       axios({
-        url: url,
+        url: `${url}/init-render-data`,
         method: "POST",
         headers: {
           Accept: "Application/json",
@@ -67,39 +69,43 @@ const HomePage = () => {
           Authorization: `Bearer ${window.TOKEN}`,
         },
       }).then((res) => {
+        // console.log(res.data);
         setTimeout(() => {
           setMusicStart(true);
         }, 500);
 
+        // set running round
+        setRunningRound(res?.data?.running_round);
+
+        // calculate next event time
         const nTime = new Date(res?.data?.nextEventAt);
         const minutes = nTime.getMinutes();
         const seconds = nTime.getSeconds();
         const q = minutes * 60 + seconds;
-        const diff = q - p;
-        
+        let diff = q - p;
 
-        //set user balance
+        // console.log("diff", diff);
+
+        //set initial user balance
         setUserBalance(res?.data?.balance);
-        // set game win ratio
+        // set initial game win ratio
         setWinRatio(res?.data?.win_ratio);
-        //set total play amounts
+        //set initial total play amounts
         setTotalPlay(res?.data?.total_play);
-
+        // set initial total win amounts
         setTotalWin(res?.data?.total_win);
 
-        // console.log(res?.data.spinHistory,'init');
-        const slicedSpinHistory=res.data.spinHistory.slice(0,7)
-        const luckyNumbers=[];
-        slicedSpinHistory.map(l=>{
-          luckyNumbers.push(l.lucky_number)
-        })
+        // set initail history and luckeynumber
+        const slicedSpinHistory = res.data.spinHistory.slice(0, 7);
+        const luckyNumbers = [];
+        slicedSpinHistory.map((l) => {
+          luckyNumbers.push(l.lucky_number);
+        });
 
-        
-        setHistory(luckyNumbers)
-        setWinningNumber2(luckyNumbers[6])
-        
-        
+        setHistory(luckyNumbers);
+        setWinningNumber2(luckyNumbers[6]);
 
+        // set initial bets if axists
         if (res?.data?.bets?.length > 0) {
           setShowInitialModal(false);
           // setIsSpin(true)
@@ -113,15 +119,14 @@ const HomePage = () => {
 
           setIsBetDone(true);
           setIsTimesUp(true);
-          
-          if (diff >= 20) {
-            
+
+          if (res?.data?.nextEventAfterSeconds >= 20) {
             setIsSpin(false);
             setIsTimerStart(true);
             setTotalDuration(10);
             setIsBetAble(true);
           } else {
-            setInitialWaitingTime(diff);
+            setInitialWaitingTime(res?.data?.nextEventAfterSeconds + 2);
             setIsSpin(true);
             // setShowInitialModal(true);
           }
@@ -129,13 +134,17 @@ const HomePage = () => {
           return;
         }
 
-        if (diff >= 20) {
+        // diff = 15;
+
+        if (res?.data?.nextEventAfterSeconds >= 20) {
+          // setInitialWaitingTime(diff);
+          // setShowInitialModal(true);
           setIsSpin(false);
           setIsTimerStart(true);
           setTotalDuration(10);
           setIsBetAble(true);
         } else {
-          setInitialWaitingTime(diff);
+          setInitialWaitingTime(res?.data?.nextEventAfterSeconds + 2);
           setIsSpin(true);
           setShowInitialModal(true);
         }
@@ -151,59 +160,58 @@ const HomePage = () => {
     // private channel subscribed
     try {
       echo
-      .private(`UPDATE_USER_STATE_${window.user.id}`)
-      .listen("UpdateUserStateEvent", (event) => {
-        setUserBalance(event.balance);
-        setTotalWin(event.total_win);
+        .private(`UPDATE_USER_STATE_${window.user.id}`)
+        .listen("UpdateUserStateEvent", (event) => {
+          setUserBalance(event.balance);
+          setTotalWin(event.total_win);
+        });
+
+      //public channel subscribed
+      echo.channel("GLOBAL_STATE_CHANNEL").listen("SpinEvent", (event) => {
+        globalStateUpdate(
+          event,
+          setIsDataFetch,
+          setLuckyNumber,
+          setShowInitialModal,
+          isDataFetch,
+          setHistory,
+          luckyNumber,
+          setWinningNumber2
+        );
+        setRunningRound(event.running_round);
+        // set History and time
+        if (event.spinHistory) {
+          setHistory([]);
+          setCurrentTime([]);
+
+          const slicedCurrentTime = event.spinHistory.slice(0, 7);
+          const slicedHistory = event.spinHistory.slice(0, 7);
+
+          const luckyNumber = [];
+          const tempCurrentTime = [];
+
+          slicedHistory.map((s) => {
+            return luckyNumber.push(s.lucky_number);
+          });
+          setHistory(luckyNumber.reverse());
+
+          slicedCurrentTime.map((t) => {
+            const managedTime = new Date(t.created_at);
+
+            const hours = managedTime.getHours();
+            const minutes = managedTime.getMinutes();
+            const formatedTime = `${hours}:${minutes}`;
+
+            return tempCurrentTime.push(formatedTime);
+          });
+          setCurrentTime(tempCurrentTime.reverse());
+        }
       });
-
-       //public channel subscribed
-    echo.channel("GLOBAL_STATE_CHANNEL").listen("SpinEvent", (event) => {
-      globalStateUpdate(
-        event,
-        setIsDataFetch,
-        setLuckyNumber,
-        setShowInitialModal,
-        isDataFetch,
-        setHistory,
-        luckyNumber,
-        setWinningNumber2
-      );
-
-      // set History and time
-      if (event.spinHistory) {
-        setHistory([]);
-        setCurrentTime([]);
-
-        const slicedCurrentTime = event.spinHistory.slice(0, 7);
-        const slicedHistory = event.spinHistory.slice(0, 7);
-
-        const luckyNumber = [];
-        const tempCurrentTime = [];
-
-        slicedHistory.map((s) => {
-          return luckyNumber.push(s.lucky_number);
-        });
-        setHistory(luckyNumber.reverse());
-
-        slicedCurrentTime.map((t) => {
-          const managedTime = new Date(t.created_at);
-
-          const hours = managedTime.getHours();
-          const minutes = managedTime.getMinutes();
-          const formatedTime = `${hours}:${minutes}`;
-
-          return tempCurrentTime.push(formatedTime);
-        });
-        setCurrentTime(tempCurrentTime.reverse());
-      }
-    });
     } catch (error) {
-      toast.error(`${error}`,{
-        position:'top-right'
-      })
+      toast.error(`${error}`, {
+        position: "top-right",
+      });
     }
-   
   }, []);
 
   return (
@@ -223,7 +231,7 @@ const HomePage = () => {
 
       <AudioPlayer />
       <div className="mb-12">
-        <SmallDeviceSetup/>
+        <SmallDeviceSetup />
       </div>
       {/* <div className="hidden lg:block">
         <LargeScreenSetup />

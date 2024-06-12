@@ -1320,6 +1320,14 @@
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.54.0.tgz"
   integrity sha512-ut5V+D+fOoWPgGGNj83GGjnntO39xDy6DWxO0wb7Jp3DcMX0TfIqdzHF85VTQkerdyGmuuMD9AKAo5KiNlf/AQ==
 
+"@gsap/react@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/@gsap/react/-/react-2.1.1.tgz"
+  integrity sha512-apGPRrmpqxvl1T6Io1KgT8tFU+IuACI6z4zmT7t8+PASserJeLVRFJdSNUFA2Xb/eVkZI1noE8LIrY/w/oJECw==
+  dependencies:
+    gsap "^3.12.5"
+    react ">=16"
+
 "@humanwhocodes/config-array@^0.11.13":
   version "0.11.13"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.13.tgz"
@@ -5155,6 +5163,11 @@ graphemer@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/graphemer/-/graphemer-1.4.0.tgz"
   integrity sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==
+
+gsap@^3.12.5:
+  version "3.12.5"
+  resolved "https://registry.npmjs.org/gsap/-/gsap-3.12.5.tgz"
+  integrity sha512-srBfnk4n+Oe/ZnMIOXt3gT605BX9x5+rh/prT2F1SsNJsU1XuMiP0E2aptW481OnonOGACZWBqseH5Z7csHxhQ==
 
 gzip-size@^6.0.0:
   version "6.0.0"

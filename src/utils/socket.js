@@ -3,20 +3,19 @@
 import axios from "axios";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
+import url from "../config";
 
-const handlePusher=1
-if(handlePusher===5){
-  console.log(Pusher)
+const handlePusher = 1;
+if (handlePusher === 5) {
+  console.log(Pusher);
 }
-
-
 
 const authorizer = (channel, options) => {
   return {
     authorize: (socketId, callback) => {
       axios
         .post(
-          "https://1ten365.online/api/broadcasting/auth",
+          `${url}/api/broadcasting/auth`,
           {
             socket_id: socketId,
             channel_name: channel.name,
@@ -32,7 +31,7 @@ const authorizer = (channel, options) => {
         })
         .catch((error) => {
           callback(error);
-          console.log(error,"error from auth");
+          console.log(error, "error from auth");
         });
     },
   };

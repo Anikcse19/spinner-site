@@ -49,17 +49,20 @@ export function BetContextProvider({ children }) {
   const [musicStart, setMusicStart] = useState(false);
   const [showWinningNumberModal, setShowWinningNumberModal] = useState(false);
   const [winningNumber2, setWinningNumber2] = useState(null);
-  const [isSelectAmount,setIsSelectAmount]=useState(false)
-  const [selectedColorButton,setSelectedColorButton]=useState([])
-  const [sel,setSel]=useState([])
-  const [winRatio,setWinRatio]=useState(0)
-  const [showCustomizeAmountsModal,setShowCustomizeAmountsModal]=useState(false)
-  const [betPoints,setBetPoints]=useState([0.25,0.5,5,10])
-  const [selectedCoin,setSelectedCoin]=useState(null)
-  const [isBetComplete,setIsBetComplete]=useState({
-    value:null,state:false
-  })
-  const [showColorPapers,setShowColorPapers]=useState(false)
+  const [isSelectAmount, setIsSelectAmount] = useState(false);
+  const [selectedColorButton, setSelectedColorButton] = useState([]);
+  const [sel, setSel] = useState([]);
+  const [winRatio, setWinRatio] = useState(0);
+  const [showCustomizeAmountsModal, setShowCustomizeAmountsModal] =
+    useState(false);
+  const [betPoints, setBetPoints] = useState([0.25, 0.5, 5, 10]);
+  const [selectedCoin, setSelectedCoin] = useState(null);
+  const [isBetComplete, setIsBetComplete] = useState({
+    value: null,
+    state: false,
+  });
+  const [showColorPapers, setShowColorPapers] = useState(false);
+  const [runningRound, setRunningRound] = useState("------");
 
   function userStateUpdate(event) {
     setUserBalance(event.balance);
@@ -141,14 +144,28 @@ export function BetContextProvider({ children }) {
         setShowWinningNumberModal,
         winningNumber2,
         setWinningNumber2,
-        isSelectAmount,setIsSelectAmount,
-        selectedColorButton,setSelectedColorButton,
-        sel,setSel,
-        winRatio,setWinRatio,
-        showCustomizeAmountsModal,setShowCustomizeAmountsModal,
-        betPoints,setBetPoints,
-        isBetComplete,setIsBetComplete,selectedCoin,setSelectedCoin,showColorPapers,setShowColorPapers
-      }}>
+        isSelectAmount,
+        setIsSelectAmount,
+        selectedColorButton,
+        setSelectedColorButton,
+        sel,
+        setSel,
+        winRatio,
+        setWinRatio,
+        showCustomizeAmountsModal,
+        setShowCustomizeAmountsModal,
+        betPoints,
+        setBetPoints,
+        isBetComplete,
+        setIsBetComplete,
+        selectedCoin,
+        setSelectedCoin,
+        showColorPapers,
+        setShowColorPapers,
+        runningRound,
+        setRunningRound,
+      }}
+    >
       {children}
     </BetContext.Provider>
   );

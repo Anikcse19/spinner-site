@@ -8,8 +8,9 @@ import { BetContext } from "../../ContextApi/BetContext";
 import WinningNumberModal from "../Modal/WinningNumberModal";
 import CountDown from "./CountDown";
 import History from "./History";
+import url from "../../config";
 
-const url = "https://1ten365.online/api/check-balance";
+// const url = "https://1ten365.online/api/check-balance";
 const token = localStorage.getItem("token");
 
 const Header = () => {
@@ -62,7 +63,7 @@ const Header = () => {
                       onClick={() => {
                         setIsLoading(true);
                         axios({
-                          url: url,
+                          url: `${url}/api/check-balance`,
                           method: "POST",
                           headers: {
                             Accept: "Application/json",
@@ -93,7 +94,7 @@ const Header = () => {
           <CountDown />
         </div>
         <div className="hidden xl:block ">
-          <WinningNumberModal/>
+          <WinningNumberModal />
         </div>
 
         <div className="hidden xl:block">
